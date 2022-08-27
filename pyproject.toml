@@ -1,0 +1,21 @@
+[tool.poetry]
+name = "rich-strawberry"
+version = "0.1.0"
+description = ""
+authors = ["zlira <olesia.hr@gmail.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+strawberry-graphql = "^0.126.2"
+rich = "^12.5.1"
+
+[tool.poetry.dev-dependencies]
+pytest = "^5.2"
+flake8 = "^5.0.4"
+mypy = "^0.971"
+isort = "^5.10.1"
+black = "^22.6.0"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
