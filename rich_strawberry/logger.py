@@ -22,12 +22,11 @@ class RichGraphQLLogger:
         self.suppress_traceback_from = suppress_traceback_from or (strawberry, graphql)
 
     # TODO context doesn't need to be a mapping
-    def _log_context(self, context: Mapping) -> None:
-        if not self.log_context_keys:
+    def _log_context(self, context: Mapping | None) -> None:
+        if not self.log_context_keys or not context:
             return
         # TODO don't print if no keys found?
         self.console.rule("CONTEXT")
-        context = context
         for key in self.log_context_keys:
             if context_val := context.get(key):
                 inspect(context_val, console=self.console)

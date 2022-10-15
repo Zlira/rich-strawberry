@@ -6,15 +6,24 @@ authors = ["zlira <olesia.hr@gmail.com>"]
 
 [tool.poetry.dependencies]
 python = "^3.10"
-strawberry-graphql = "^0.126.2"
-rich = "^12.5.1"
+strawberry-graphql = ">=0.126.2"
+rich = ">=12.5.1"
 
 [tool.poetry.dev-dependencies]
-pytest = "^5.2"
+pytest = "^7.1"
 flake8 = "^5.0.4"
 mypy = "^0.971"
 isort = "^5.10.1"
 black = "^22.6.0"
+ipdb = "^0.13.9"
+
+[tool.mypy]
+python_version = "3.10"
+check_untyped_defs = true
+warn_unused_ignores = true
+warn_redundant_casts = true
+warn_unused_configs = true
+plugins = ["strawberry.ext.mypy_plugin"]
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
