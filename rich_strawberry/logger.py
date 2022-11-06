@@ -18,6 +18,13 @@ class RichGraphQLLogger:
         log_context_keys: Iterable[str] = (),
         suppress_traceback_from: Iterable[ModuleType] = (),
     ):
+        """
+        log_context_keys: which keys form the context to log,
+          the logger assumes the context is a mapping,
+          the default value is ("request", )
+        suppress_traceback_from: a list of modules, in a traceback the frames
+          from these modules will be suppressed, i.e. shown as a file line only
+        """
         self.log_context_keys = log_context_keys or ("request",)
         self.suppress_traceback_from = suppress_traceback_from or (strawberry, graphql)
 
@@ -25,14 +32,16 @@ class RichGraphQLLogger:
     def _log_context(self, context: Mapping | None) -> None:
         if not self.log_context_keys or not context:
             return
-        # TODO don't print if no keys found?
+        # TODO warn if context isn't a mapping
         self.console.rule("CONTEXT")
         for key in self.log_context_keys:
-            if context_val := context.get(key):
-                inspect(context_val, console=self.console)
-            # TODO what to do if key is absent?
+            self.console.print(key, justify="center", style="reverse")
+            if key in context:
+                inspect(context[key], console=self.console)
+            else:
+                self.console.print(f"[italic]Warning:[/italic] missing context key '{key}'")
 
-    def print_error(self, error: GraphQLError) -> None:
+    def _print_error(self, error: GraphQLError) -> None:
         self.console.rule("GRAPHQL ERROR")
         self.console.print(error)
         if error.original_error:
@@ -52,4 +61,4 @@ class RichGraphQLLogger:
         if execution_context:
             self._log_context(execution_context.context)
         for error in errors:
-            self.print_error(error)
+            self._print_error(error)

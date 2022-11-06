@@ -40,7 +40,6 @@ class TraceBackParser:
         raise ValueError("Could not determine line type", line)
 
     def parse(self, lines):
-        # __import__("ipdb").set_trace()
         for line in lines:
             if "Traceback (most recent call last)" in line:
                 self.in_traceback = True
