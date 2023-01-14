@@ -15,32 +15,11 @@ from .logger import RichGraphQLLogger
 class SchemaWithRichLogger(strawberry.Schema):
     def __init__(
         self,
-        query: Type,
-        mutation: Optional[Type] = None,
-        subscription: Optional[Type] = None,
-        directives: Iterable[StrawberryDirective] = (),
-        types=(),
-        extensions: Iterable[Union[Type[Extension], Extension]] = (),
-        execution_context_class: Optional[Type[GraphQLExecutionContext]] = None,
-        config: Optional[StrawberryConfig] = None,
-        scalar_overrides: Optional[
-            Dict[object, Union[ScalarWrapper, ScalarDefinition]]
-        ] = None,
-        schema_directives: Iterable[object] = (),
         debug_logger: Optional[RichGraphQLLogger] = None,
+        *args,
+        **kwargs,
     ):
-        super().__init__(
-            query,
-            mutation,
-            subscription,
-            directives,
-            types,
-            extensions,
-            execution_context_class,
-            config,
-            scalar_overrides,
-            schema_directives,
-        )
+        super().__init__(*args, **kwargs)
         self.debug_logger = debug_logger or RichGraphQLLogger()
 
     def process_errors(

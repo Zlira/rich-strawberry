@@ -6,7 +6,7 @@ authors = ["zlira <olesia.hr@gmail.com>"]
 
 [tool.poetry.dependencies]
 python = "^3.10"
-strawberry-graphql = {extras = ["debug-server"], version = "^0.139.0"}
+strawberry-graphql = {extras = ["debug-server", "cli"], version = "0.154.0"}
 rich = ">=12.5.1"
 
 [tool.poetry.dev-dependencies]
