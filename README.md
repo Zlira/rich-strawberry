@@ -21,6 +21,29 @@ class Query:
 schema = SchemaWithRichLogger(query=Query)
 ```
 
-This will give you the following output in the console:
+This will give you the following output in the console for the query `query { version }`:
 
-![Features](https://github.com/Zlira/rich-strawberry/raw/main/imgs/basic.svg)
+![Basic Output](https://github.com/Zlira/rich-strawberry/raw/main/imgs/basic.svg)
+
+## Configuration
+### Suppressing frames
+By default the logger uses `rich`'es [feature](https://rich.readthedocs.io/en/stable/traceback.html#suppressing-frames) to suppress the frames from `graphql` and `strawberry-graphql` libraries. You can configure the list of modules for which the frames will be suppressed. For example, if you want the full traceback:
+```python
+import strawberry
+
+from rich_strawberry import RichGraphQLLogger, SchemaWithRichLogger
+
+
+@strawberry.type
+class Query:
+    @strawberry.field
+    def version(self) -> int:
+        raise ValueError
+
+
+debug_logger = RichGraphQLLogger(suppress_traceback_from=[])
+schema = SchemaWithRichLogger(query=Query, debug_logger=debug_logger)
+```
+Here's the full console output:
+
+![Output Without Frame Suppression](https://github.com/Zlira/rich-strawberry/raw/main/imgs/without_frame_suppression.svg)
