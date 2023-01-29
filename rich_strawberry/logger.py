@@ -12,7 +12,6 @@ from strawberry.types import ExecutionContext
 
 
 class RichGraphQLLogger:
-    # console: Final[Console] = Console(stderr=True, record=True)
     console: Final[Console] = Console(stderr=True)
 
     def __init__(
@@ -81,4 +80,3 @@ class RichGraphQLLogger:
             self._log_context(execution_context.context)
         for error in errors:
             self._print_error(error)
-        # self.console.save_svg("example.svg")

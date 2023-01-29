@@ -47,3 +47,28 @@ schema = SchemaWithRichLogger(query=Query, debug_logger=debug_logger)
 Here's the full console output:
 
 ![Output Without Frame Suppression](https://github.com/Zlira/rich-strawberry/raw/main/imgs/without_frame_suppression.svg)
+
+### Logging context
+You can also configure some values from the context to be logged on error.
+```python
+import strawberry
+
+from rich_strawberry import RichGraphQLLogger, SchemaWithRichLogger
+
+
+@strawberry.type
+class Query:
+    @strawberry.field
+    def version(self) -> int:
+        raise ValueError
+
+
+debug_logger = RichGraphQLLogger(log_context_keys=("request",))
+schema = SchemaWithRichLogger(query=Query, debug_logger=debug_logger)
+```
+This will use `rich.inspect` to print that context value into the console:
+
+
+![Output With Request](https://github.com/Zlira/rich-strawberry/raw/main/imgs/with_request.svg)
+
+❗ This feature is not very well tested with different integrations so it might not work as expected.
