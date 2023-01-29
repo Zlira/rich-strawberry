@@ -41,7 +41,7 @@ class RichGraphQLLogger:
                 val = getitem(context, key)
             except TypeError:
                 val = getattr(context, key, strawberry.UNSET)
-        except KeyError:
+        except (KeyError, AttributeError):
             pass
         return val
 
