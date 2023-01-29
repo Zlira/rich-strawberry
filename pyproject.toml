@@ -1,30 +1,51 @@
-[tool.poetry]
+[tool.pdm]
+[tool.pdm.dev-dependencies]
+dev = [
+    "pytest>=7.2.1",
+    "flake8>=6.0.0",
+    "mypy>=0.991",
+    "isort>=5.12.0",
+    "black>=22.12.0",
+    "ipdb>=0.13.11",
+    "strawberry-graphql[debug-server]>=0.154.0",
+    "Flake8-pyproject>=1.2.2",
+]
+
+[project]
 name = "rich-strawberry"
-version = "0.1.0"
+version = "0.1.1"
 description = ""
-authors = ["zlira <olesia.hr@gmail.com>"]
+authors = [
+    {name = "zlira", email = "olesia.hr@gmail.com"},
+]
+dependencies = [
+    "strawberry-graphql[cli]>=0.154.0",
+    "rich>=12.5.1",
+]
+requires-python = ">=3.9"
+readme = "README.md"
+license = {text = "MIT"}
 
-[tool.poetry.dependencies]
-python = "^3.10"
-strawberry-graphql = {extras = ["debug-server", "cli"], version = "0.154.0"}
-rich = ">=12.5.1"
-
-[tool.poetry.dev-dependencies]
-pytest = "^7.1"
-flake8 = "^5.0.4"
-mypy = "^0.971"
-isort = "^5.10.1"
-black = "^22.6.0"
-ipdb = "^0.13.9"
+[build-system]
+requires = ["pdm-pep517>=1.0"]
+build-backend = "pdm.pep517.api"
 
 [tool.mypy]
-python_version = "3.10"
+python_version = "3.11"
 check_untyped_defs = true
 warn_unused_ignores = true
 warn_redundant_casts = true
 warn_unused_configs = true
 plugins = ["strawberry.ext.mypy_plugin"]
 
-[build-system]
-requires = ["poetry-core>=1.0.0"]
-build-backend = "poetry.core.masonry.api"
+[tool.isort]
+profile = "black"
+line_length = 80
+
+[tool.flake8]
+max-line-length = 80
+per-file-ignores = ["__init__.py:F401"]
+ignore = ["E203", "W503"]
+
+[tool.black]
+line_length = 80

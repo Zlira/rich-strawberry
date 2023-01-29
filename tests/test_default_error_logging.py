@@ -51,11 +51,6 @@ def test_error_in_resolver_code(default_schema, get_stripped_stderr):
     assert len(result.errors) == 1
 
     err_output = get_stripped_stderr()
-    # output_lines = [line.strip("│").strip() for line in err_output.splitlines()]
-    # print(output_lines)
-
-    # parser = TraceBackParser()
-    # parser.parse(output_lines)
 
     graphql_err = result.errors[0]
     assert "GRAPHQL ERROR" in err_output

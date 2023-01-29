@@ -1,5 +1,6 @@
 import strawberry
-from rich_strawberry import SchemaWithRichLogger, RichGraphQLLogger
+
+from rich_strawberry import RichGraphQLLogger, SchemaWithRichLogger
 
 
 @strawberry.type
@@ -10,5 +11,5 @@ class Query:
         return 139
 
 
-debug_logger = RichGraphQLLogger(log_context_keys=("solpavchek", "request"))
+debug_logger = RichGraphQLLogger(suppress_traceback_from=[])
 schema = SchemaWithRichLogger(query=Query, debug_logger=debug_logger)

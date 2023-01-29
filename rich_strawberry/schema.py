@@ -1,12 +1,7 @@
-from typing import Dict, Iterable, List, Optional, Type, Union
+from typing import Optional
 
 import strawberry
-from graphql import ExecutionContext as GraphQLExecutionContext
 from graphql import GraphQLError
-from strawberry.custom_scalar import ScalarDefinition, ScalarWrapper
-from strawberry.directive import StrawberryDirective
-from strawberry.extensions import Extension
-from strawberry.schema.config import StrawberryConfig
 from strawberry.types import ExecutionContext
 
 from .logger import RichGraphQLLogger
@@ -24,7 +19,7 @@ class SchemaWithRichLogger(strawberry.Schema):
 
     def process_errors(
         self,
-        errors: List[GraphQLError],
+        errors: list[GraphQLError],
         execution_context: Optional[ExecutionContext] = None,
     ) -> None:
         self.debug_logger.print_errors(errors, execution_context)
