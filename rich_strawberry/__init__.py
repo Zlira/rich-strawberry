@@ -1,2 +1,2 @@
+from .extension import RichLoggerExtension
 from .logger import RichGraphQLLogger
-from .schema import SchemaWithRichLogger

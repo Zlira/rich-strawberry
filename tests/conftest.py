@@ -1,8 +1,9 @@
 import re
 
 import pytest
+import strawberry
 
-from rich_strawberry import SchemaWithRichLogger
+from rich_strawberry import RichLoggerExtension
 from rich_strawberry.logger import RichGraphQLLogger
 
 from .query import Query
@@ -21,15 +22,17 @@ def query():
 
 @pytest.fixture
 def default_schema(query):
-    return SchemaWithRichLogger(query=query)
+    return strawberry.Schema(query=query, extensions=[RichLoggerExtension()])
 
 
 @pytest.fixture
 def get_schema_with_logger_params(query):
     def _get_schema_with_logger_params(*args, **kwargs):
-        return SchemaWithRichLogger(
+        return strawberry.Schema(
             query=query,
-            debug_logger=RichGraphQLLogger(*args, **kwargs),
+            extensions=[
+                RichLoggerExtension(RichGraphQLLogger(*args, **kwargs))
+            ],
         )
 
     return _get_schema_with_logger_params
