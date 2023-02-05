@@ -4,8 +4,8 @@ _This is a work in progress!_
 `rich-strawberry` is a small add-on for the [strawberry-graphql](https://github.com/strawberry-graphql/strawberry) library that uses [rich](https://github.com/Textualize/rich) to print error information nicely.
 
 ## Basic Example
-You can use the `RichLoggerExtension` to get the improved traceback in your application. However, you'll need to disable the
-default logger if you want to avoid logging every exception twice.
+You can use the `RichLoggerExtension` to get improved traceback in your application. However, you'll need to disable the
+default logger to avoid logging every exception twice.
 
  Here's a basic example:
 ```python
@@ -35,7 +35,7 @@ This will give you the following output in the console for the query `query { ve
 
 ## Configuration
 ### Suppressing frames
-By default the logger uses `rich`'es [feature](https://rich.readthedocs.io/en/stable/traceback.html#suppressing-frames) to suppress the frames from `graphql` and `strawberry-graphql` libraries. You can configure the list of modules for which the frames will be suppressed. For example, if you want the full traceback:
+By default, the logger uses a [feature](https://rich.readthedocs.io/en/stable/traceback.html#suppressing-frames) from `rich` to suppress the frames from `graphql` and `strawberry-graphql` libraries. You can configure the list of modules for which the frames will be suppressed. For example, if you want the full traceback:
 ```python
 import logging
 
@@ -64,8 +64,7 @@ Here's the full console output:
 ![Output Without Frame Suppression](https://github.com/Zlira/rich-strawberry/raw/main/imgs/without_frame_suppression.svg)
 
 ### Logging context
-You can also configure some values from the context to be logged on error. The `rich.inspect` function will be used
-to print the object from the context.
+You can also configure some values from the context to be logged on error.
 ```python
 import logging
 
@@ -98,7 +97,7 @@ This will use `rich.inspect` to print that context value into the console:
 
 
 ## Using with subscription
-At the moment of writing subscriptions don't support extensions (check [this](https://github.com/strawberry-graphql/strawberry/pull/2430) merge request, maybe they already do!) So if you want to use the `RichGraphQLLogger` for your subscriptions you'll need
+At the moment of writing, subscriptions don't support extensions (check [this](https://github.com/strawberry-graphql/strawberry/pull/2430) merge request, maybe they already do!) So if you want to use the `RichGraphQLLogger` for your subscriptions, you'll need
 to define a custom `Schema` class and overwrite its `process_errors` method:
 
 ```python
@@ -127,4 +126,6 @@ class SchemaWithRichLogger(strawberry.Schema):
     ) -> None:
         self.debug_logger.print_errors(errors, execution_context)
 ```
-Context values cannot be logged for subscriptions.
+You can see a full example with subscriptions [here](https://github.com/Zlira/rich-strawberry/blob/main/example/example_with_subscription.py).
+
+Context values aren't logged for subscriptions.
